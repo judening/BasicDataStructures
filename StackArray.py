@@ -3,7 +3,7 @@ class Stack:
          self.items = []
 
      def isEmpty(self):
-         return self.items == []
+         return not self.items
 
      def push(self, item):
          self.items.append(item)
@@ -12,7 +12,9 @@ class Stack:
          return self.items.pop()
 
      def peek(self):
+         # can do: return self.items[-1]
+         # also, will throw if empty
          return self.items[len(self.items)-1]
 
-     def size(self):
+     def __len__(self):
          return len(self.items)

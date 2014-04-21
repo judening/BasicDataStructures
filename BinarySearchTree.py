@@ -96,8 +96,9 @@ def bfs_queue(root):
     queue = []
     dic = {}
     bfs_print(root,queue,dic)
-    print dic
+    print(dic)
     
+# can use an iterator (yield) instead
 def bfs_print(root, queue, dic):
     if root is None:
         return
