@@ -86,9 +86,9 @@ def search(root,node):
         return None
     else:
         if (root.data > node.data):
-            search(root.left_child, node)
+            return search(root.left_child, node)
         elif (root.data < node.data):
-            search(root.right_child,node)
+            return search(root.right_child,node)
         else:
             return root
 
