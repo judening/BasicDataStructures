@@ -10,13 +10,13 @@ def insert(root,node):
         root = node
     else:
         if root.data > node.data:
-            if root.left_child == None:
+            if root.left_child is None:
                 root.left_child = node
                 root.left_child.depth = root.depth+1
             else:
                 insert(root.left_child, node)
         else:
-            if root.right_child == None:
+            if root.right_child is None:
                 root.right_child = node
                 root.right_child.depth = root.depth+1
             else:
@@ -28,12 +28,12 @@ def delete(root,node,parent,direction):
         return False
     else:
         if root.data > node.data:
-            if root.left_child == None:
+            if root.left_child is None:
                 return False
             else:
                 delete(root.left_child, node, root, 0)
         elif root.data < node.data:
-            if root.right_child == None:
+            if root.right_child is None:
                 return False
             else:
                 delete(root.right_child, node, root, 1)
