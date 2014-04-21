@@ -3,6 +3,7 @@ class Node:
         self.left_child = None
         self.right_child = None
         self.data = val
+        self.depth = 0
         
 def insert(root,node):
     if root is None:
@@ -11,11 +12,13 @@ def insert(root,node):
         if root.data > node.data:
             if root.left_child == None:
                 root.left_child = node
+                root.left_child.depth = root.depth+1
             else:
                 insert(root.left_child, node)
         else:
             if root.right_child == None:
                 root.right_child = node
+                root.right_child.depth = root.depth+1
             else:
                 insert(root.right_child, node)
     
@@ -69,3 +72,26 @@ def search(root,node):
             search(root.right_child,node)
         else:
             return root
+
+def bfs_queue(root):
+    queue = []
+    dic = {}
+    bfs_print(root,queue,dic)
+    print dic
+    
+def bfs_print(root, queue, dic):
+    if root is None:
+        return
+    else:
+        queue.append(root)
+        if dic.get(root.depth) is None:
+            dic[root.depth] = [root.data]
+        else:
+            dic[root.depth].append(root.data)
+        if root.left_child is not None:
+            queue[-1] = root.left_child
+        if root.right_child is not None:
+            queue[-1] = root.right_child
+        bfs_print(root.left_child,queue,dic)
+        bfs_print(root.right_child,queue,dic)
+    
