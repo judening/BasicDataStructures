@@ -28,7 +28,7 @@ class Node:
                     return false
                 else:
                     delete(root.left_child, node)
-            else if root.data < node.data:
+            elif root.data < node.data:
                 if root.right_child == None:
                     return false
                 else:
@@ -37,7 +37,7 @@ class Node:
                 if(root.left_child is None and root.right_child is None):
                     root = None
                     return true
-                else if (root.left_child is None and root.right_child is not None):
+                elif (root.left_child is None and root.right_child is not None):
                     to_replace = find_smallest(root.right_child)
                     #I gotta give the tuple unpacking some credits, so damn easy
                     root.data, to_replace.data = to_replace.data, root.data
@@ -65,7 +65,7 @@ class Node:
         else:
             if (root.data > node.data):
                 search(root.left_child, node)
-            else if (root.data < node.data):
+            elif (root.data < node.data):
                 search(root.right_child,node)
             else:
                 return root
