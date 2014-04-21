@@ -22,45 +22,64 @@ def insert(root,node):
             else:
                 insert(root.right_child, node)
     
-def delete(root,node):
+#Python has class problem
+def delete(root,node,parent,direction):
     if root is None:
-        return false
+        return False
     else:
         if root.data > node.data:
             if root.left_child == None:
-                return false
+                return False
             else:
-                delete(root.left_child, node)
+                delete(root.left_child, node, root, 0)
         elif root.data < node.data:
             if root.right_child == None:
-                return false
+                return False
             else:
-                delete(root.right_child, node)
+                delete(root.right_child, node, root, 1)
         else:
             if(root.left_child is None and root.right_child is None):
-                root = None
-                return true
+                if direction == 0:
+                    parent.left_child = None
+                elif direction == 1:
+                    parent.right_child = None
+                else:
+                    root = None
+                return True
             elif (root.left_child is None and root.right_child is not None):
-                to_replace = find_smallest(root.right_child)
+                to_replace, to_replace_parent = find_smallest(root.right_child,root)
+                i = 0
+                if to_replace.data == to_replace_parent.right_child.data:
+                    i = 1
                 #I gotta give the tuple unpacking some credits, so damn easy
                 root.data, to_replace.data = to_replace.data, root.data
-                to_replace = None
-                return true
+                if i==0 :
+                    to_replace_parent.left_child = None
+                else:
+                    to_replace_parent.right_child = None
+                return root
             else:
-                to_replace = find_smallest(root.left_child)
-                root.data, to_replace.data = toreplace.data, root.data
-                to_replace = None
-                return true
+                to_replace, to_replace_parent = find_smallest(root.left_child,root)
+                i = 0
+                if to_replace.data == to_replace_parent.right_child.data:
+                    i = 1
+                #I gotta give the tuple unpacking some credits, so damn easy
+                root.data, to_replace.data = to_replace.data, root.data
+                if i==0 :
+                    to_replace_parent.left_child = None
+                else:
+                    to_replace_parent.right_child = None
+                return root
                     
 #The one to replace/swap is always the left child or the smallest of right sub tree            
-def find_smallest(root):
+def find_smallest(root,parent):
     if root is None:
-        return None
+        return (None,None)
     else:
         if root.left_child is not None:
-            return find_smallest(root.left_child)
+            return find_smallest(root.left_child,root)
         else:
-            return root
+            return (root,parent)
 
 def search(root,node):
     if root is None:
