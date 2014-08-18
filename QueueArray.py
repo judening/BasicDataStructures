@@ -3,7 +3,7 @@ class Queue:
         self.items = []
 
     def isEmpty(self):
-        return self.items == []
+        return not self.items
 
     def enqueue(self, item):
         self.items.insert(0,item)
@@ -11,5 +11,5 @@ class Queue:
     def dequeue(self):
         return self.items.pop()
 
-    def size(self):
+    def __len__(self):
         return len(self.items)
