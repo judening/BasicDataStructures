@@ -15,7 +15,7 @@ class Node:
         else:
             if self.right_child is None:
                 self.right_child = Node(data)
-                self.right_child.depth = root.depth+1
+                self.right_child.depth = self.depth+1
             else:
                 self.right_child.insert(data)
 
@@ -60,7 +60,7 @@ class Node:
             del node
             return True
 
-        elif (node.left_child is None and node.right_child is not None):
+        elif (node.left_child is not None and node.right_child is not None):
             to_replace, to_replace_parent = self.right_child.find_smallest(node)
             flag = 0
             if to_replace is to_replace_parent.right_child:
@@ -72,8 +72,19 @@ class Node:
             else:
                 to_replace_parent.right_child = None
             return True
+        elif (node.left_child is None and node.right_child is not None):
+            to_replace, to_replace_parent = node.right_child, parent
+            flag = 0
+            if to_replace is to_replace_parent.right_child:
+                flag = 1
+            node.data, to_replace.data = to_replace.data, node.data
+            if flag==0 :
+                to_replace_parent.left_child = None
+            else:
+                to_replace_parent.right_child = None
+            return True
         else:
-            to_replace, to_replace_parent = self.left_child.find_smallest(node)
+            to_replace, to_replace_parent = node.left_child, parent
             flag = 0
             if to_replace is to_replace_parent.right_child:
                 flag = 1
@@ -85,6 +96,39 @@ class Node:
             return True
 
 
+    def inorderTraversal(self,queue):
+        if self is not None:
+            if self.left_child is not None:
+                self.left_child.inorderTraversal(queue)
+            queue.append(self.data)
+            if self.right_child is not None:
+                self.right_child.inorderTraversal(queue)
+
+    def preorderTraversal(self,queue):
+        if self is not None:
+            queue.append(self.data)
+            if self.left_child is not None:
+                self.left_child.preorderTraversal(queue)
+            if self.right_child is not None:
+                self.right_child.preorderTraversal(queue)
+
+    def postorderTraversal(self,queue):
+        if self is not None:
+            if self.left_child is not None:
+                self.left_child.postorderTraversal(queue)
+            if self.right_child is not None:
+                self.right_child.postorderTraversal(queue)
+            queue.append(self.data)
+
+    #There really isn't many meanings to do bfs using recursion
+    def bfsTraversal(self,queue):
+        if self is not None:
+            if self.left_child is not None:
+                queue.append(self.left_child)
+            if self.right_child is not None:
+                queue.append(self.right_child)
+            if len(queue) >1:
+                queue[0].bfsTraversal(queue[1:])
 
 def bfs_queue(root):
     queue = []
@@ -93,7 +137,8 @@ def bfs_queue(root):
     print(dic)
 
 # can use an iterator (yield) instead
-def bfs_print(root, queue, dic):
+def bfs_print(root):
+    queue = []
     if root is None:
         return
     else:
@@ -109,3 +154,23 @@ def bfs_print(root, queue, dic):
         bfs_print(root.left_child,queue,dic)
         bfs_print(root.right_child,queue,dic)
 
+bst = Node(10)
+bst.insert(9)
+bst.insert(11)
+bst.insert(7.5)
+bst.insert(9.5)
+bst.insert(9.25)
+bst.insert(9.75)
+bst.insert(10.5)
+bst.insert(11.5)
+queueOne = []
+bst.inorderTraversal(queueOne)
+print queueOne
+bst.delete(10)
+queue = []
+anotherQueue = []
+bst.inorderTraversal(queue)
+#bst.bfsTraversal(anotherQueue)
+print queue
+#for node in anotherQueue:
+#    print node.data
