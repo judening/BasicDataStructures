@@ -120,39 +120,29 @@ class Node:
                 self.right_child.postorderTraversal(queue)
             queue.append(self.data)
 
-    #There really isn't many meanings to do bfs using recursion
-    def bfsTraversal(self,queue):
-        if self is not None:
-            if self.left_child is not None:
-                queue.append(self.left_child)
-            if self.right_child is not None:
-                queue.append(self.right_child)
-            if len(queue) >1:
-                queue[0].bfsTraversal(queue[1:])
-
-def bfs_queue(root):
-    queue = []
-    dic = {}
-    bfs_print(root,queue,dic)
-    print(dic)
+    def bfs_queue(self):
+        queue = []
+        dic = {}
+        bfs_print(queue,dic)
+        print(dic)
 
 # can use an iterator (yield) instead
-def bfs_print(root):
-    queue = []
-    if root is None:
-        return
-    else:
-        queue.append(root)
-        if dic.get(root.depth) is None:
-            dic[root.depth] = [root.data]
+    def bfs_print(self,queue,dic):
+        queue = []
+        if root is None:
+            return
         else:
-            dic[root.depth].append(root.data)
-        if root.left_child is not None:
-            queue[-1] = root.left_child
-        if root.right_child is not None:
-            queue[-1] = root.right_child
-        bfs_print(root.left_child,queue,dic)
-        bfs_print(root.right_child,queue,dic)
+            queue.append(self)
+            if dic.get(self.depth) is None:
+                dic[self.depth] = [self.data]
+            else:
+                dic[self.depth].append(self.data)
+            if self.left_child is not None:
+                queue[-1] = self.left_child
+            if self.right_child is not None:
+                queue[-1] = self.right_child
+            self.left_child.bfs_print(queue,dic)
+            self.right_child.bfs_print(queue,dic)
 
 bst = Node(10)
 bst.insert(9)
@@ -168,9 +158,5 @@ bst.inorderTraversal(queueOne)
 print queueOne
 bst.delete(10)
 queue = []
-anotherQueue = []
 bst.inorderTraversal(queue)
-#bst.bfsTraversal(anotherQueue)
 print queue
-#for node in anotherQueue:
-#    print node.data
