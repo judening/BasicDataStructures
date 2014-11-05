@@ -1,6 +1,9 @@
+import math
+
 class SegmentTree:
     def __init__(self,arr):
-        self.max_size = 2*len(arr)-1
+        height = math.ceil(math.log(len(arr),2))
+        self.max_size = int(2*pow(2,height)-1)
         self.st = [None for i in range(self.max_size)]
         self.constructST(arr,0,len(arr)-1,self.st,0)
 
@@ -11,8 +14,6 @@ class SegmentTree:
 
         mid = self.getMid(ss,se)
         print 'the set of mid,ss,se,si,left,right index are: ', mid,ss,se,si,si*2+1, si*2+2
-        if si>=self.max_size:
-            return arr[ss]
         if ss == se:
             st[si] = arr[ss]
             return arr[ss]
@@ -31,6 +32,6 @@ class SegmentTree:
 
 #Testing
 
-arr = [2,5,1,4,9,3,8]
+arr = [2,5,1,4,9,3]
 arrSegTree = SegmentTree(arr)
 print arrSegTree.st
