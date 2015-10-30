@@ -21,7 +21,7 @@ class SegmentTree:
 
     def RMQreturnUtil(self,st,ss,se,qs,qe,index):
         #This might be a bit hard to understand, but ss and se represents the staring index and ending
-        #index of a node given. It has nothing to do with the length of st, which confused me at first.
+        #index of a node given. It has nothing to do with the length of st.
         #If condition is met, it means that the ss-se interval is within the inquired range qs-qe.
         #Thus, this node must have been the smallest node given the way we construct them
         if qs<=ss and qe>=se:
